@@ -1,0 +1,51 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{939CA539-E7B7-4932-A53C-CEA7E3A77A8D}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Win32</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TestServer</RootNamespace>
+    <AssemblyName>TestServer</AssemblyName>
+    <OutputName>TestServer</OutputName>
+    <CWOutputType>Exe</CWOutputType>
+    <DefineConstants>_SVDllMode_=&gt;0%3b_SVLinkMode_=&gt;1%3b_ecgOleAutLinkMode_=&gt;0%3b_ABCDllMode_=&gt;0%3b_ABCLinkMode_=&gt;1</DefineConstants>
+    <Model>Lib</Model>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <vid>full</vid>
+    <check_stack>True</check_stack>
+    <check_index>True</check_index>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <vid>off</vid>
+    <check_stack>False</check_stack>
+    <check_index>False</check_index>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="TestServer.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="TestServer001.clw">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="TESTSERVER_BC.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <Compile Include="TestServer_BC0.CLW">
+      <Generated>true</Generated>
+    </Compile>
+    <None Include="WebSockets.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generated>True</Generated>
+      <ProjectGenerated>True</ProjectGenerated>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="TestServer.EXE.manifest" />
+  </ItemGroup>
+  <Import Project="$(ClarionBinPath)\SoftVelocity.Build.Clarion.targets" />
+</Project>

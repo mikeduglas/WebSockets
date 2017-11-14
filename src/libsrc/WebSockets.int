@@ -1,0 +1,86 @@
+!Generated .INC file (by the EasyCOM2INC v 2.14)
+!IDL filename: WebSockets.idl
+
+!*********** Interfaces ***********
+!IDispatch
+!IUnknown
+!IWebSocketClient
+!IWebSocketEvents
+!IWebSocketServer
+!*********** End of Interfaces ***********
+
+!*********** Data types ***********
+!*********** End of Data types ***********
+
+
+!*********** interfaces ***********
+IID_IWebSocketServer          GROUP
+data1                           LONG(3A3C6EF6H)
+data2                           SHORT(706BH)
+data3                           SHORT(4A50H)
+data4                           STRING('<0AFH><3CH><0E2H><3FH><0F7H><0EEH><52H><46H>')
+                              END
+IWebSocketServer              INTERFACE(IDispatch),COM,TYPE
+RegisterEventHandler            PROCEDURE(*IWebSocketEvents handler),HRESULT,RAW,PROC
+UnregisterEventHandler          PROCEDURE(*IWebSocketEvents handler),HRESULT,RAW,PROC
+vWebRoot                        PROCEDURE(BSTRING webRoot),HRESULT,RAW,PROC
+vPort                           PROCEDURE(long port),HRESULT,RAW,PROC
+vCertificate                    PROCEDURE(BSTRING certFile,BSTRING certPassword),HRESULT,RAW,PROC
+vStart                          PROCEDURE(),HRESULT,RAW,PROC
+vStop                           PROCEDURE(),HRESULT,RAW,PROC
+vSendText                       PROCEDURE(BSTRING serviceId,BSTRING text),HRESULT,RAW,PROC
+vSendBinary                     PROCEDURE(BSTRING serviceId,VARIANT payload),HRESULT,RAW,PROC
+vSendFile                       PROCEDURE(BSTRING serviceId,BSTRING filename),HRESULT,RAW,PROC
+vAbortService                   PROCEDURE(BSTRING serviceId,long closeCode),HRESULT,RAW,PROC
+                              END
+IID_IWebSocketClient          GROUP
+data1                           LONG(2562D637H)
+data2                           SHORT(0E89BH)
+data3                           SHORT(443AH)
+data4                           STRING('<0BBH><3EH><0EEH><6H><88H><59H><9H><4BH>')
+                              END
+IWebSocketClient              INTERFACE(IDispatch),COM,TYPE
+RegisterEventHandler            PROCEDURE(*IWebSocketEvents handler),HRESULT,RAW,PROC
+UnregisterEventHandler          PROCEDURE(*IWebSocketEvents handler),HRESULT,RAW,PROC
+vStart                          PROCEDURE(BSTRING pUrl),HRESULT,RAW,PROC
+vStop                           PROCEDURE(),HRESULT,RAW,PROC
+vSendText                       PROCEDURE(BSTRING text),HRESULT,RAW,PROC
+vSendBinary                     PROCEDURE(VARIANT payload),HRESULT,RAW,PROC
+vSendFile                       PROCEDURE(BSTRING filename),HRESULT,RAW,PROC
+                              END
+IID_IWebSocketEvents          GROUP
+data1                           LONG(58D38311H)
+data2                           SHORT(0ECF3H)
+data3                           SHORT(477CH)
+data4                           STRING('<86H><0C6H><6FH><56H><74H><80H><0BDH><0E9H>')
+                              END
+IWebSocketEvents              INTERFACE(IDispatch),COM,TYPE
+LogInfo                         PROCEDURE(BSTRING par_msg),HRESULT,PROC
+LogWarning                      PROCEDURE(BSTRING par_msg),HRESULT,PROC
+LogError                        PROCEDURE(BSTRING par_msg),HRESULT,PROC
+ConnectionOpened                PROCEDURE(BSTRING serviceId,BSTRING servicePath,BSTRING serviceIP),HRESULT,PROC
+ConnectionClose                 PROCEDURE(BSTRING serviceId,LONG pcode,BSTRING preason),HRESULT,PROC
+Ping                            PROCEDURE(BSTRING serviceId,*VARIANT payload),HRESULT,PROC
+Pong                            PROCEDURE(BSTRING serviceId,*VARIANT payload),HRESULT,PROC
+TextFrame                       PROCEDURE(BSTRING serviceId,BSTRING text),HRESULT,PROC
+TextMultiFrame                  PROCEDURE(BSTRING serviceId,BSTRING text,BYTE isLastFrame),HRESULT,PROC
+BinaryFrame                     PROCEDURE(BSTRING serviceId,*VARIANT payload),HRESULT,PROC
+BinaryMultiFrame                PROCEDURE(BSTRING serviceId,*VARIANT payload,BYTE isLastFrame),HRESULT,PROC
+FileFrame                       PROCEDURE(BSTRING serviceId,BSTRING filename,*VARIANT payload),HRESULT,PROC
+                              END
+
+!*********** Coclasses ***********
+!coclass WebSocketServer                                                                                     
+IID_WebSocketServer           GROUP
+data1                           LONG(0A2754969H)
+data2                           SHORT(69FH)
+data3                           SHORT(497AH)
+data4                           STRING('<0A3H><9FH><58H><9DH><2AH><2BH><0FAH><68H>')
+                              END
+!coclass WebSocketClient                                                                                     
+IID_WebSocketClient           GROUP
+data1                           LONG(0E864B9D2H)
+data2                           SHORT(7153H)
+data3                           SHORT(456FH)
+data4                           STRING('<91H><8AH><0C4H><27H><82H><0DEH><65H><0E9H>')
+                              END

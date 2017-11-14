@@ -1,0 +1,84 @@
+#INCLUDE('SVFnGrp.TPW')
+#INCLUDE('ISPFnGrp.TPW')
+#!
+#EXTENSION(WebSocketsGloExt,'Activate WebSockets'),APPLICATION
+#! --------------------------------------------------------------------------
+#SHEET
+  #TAB('About')
+    #BOXED('WebSockets support')
+      #DISPLAY
+      #IMAGE('ispezcam.gif')
+      #BOXED('')
+        #DISPLAY('WebSockets             Version 1.00')
+        #DISPLAY('Enables WebSockets support')
+        #DISPLAY('')
+        #DISPLAY('Mike Duglas')
+        #DISPLAY('mikeduglas@yandex.ru')
+      #ENDBOXED
+      #ENABLE(%ProgramExtension = 'EXE'),CLEAR
+        #PROMPT('Enable Registration-Free Activation ', CHECK),%AddDependency,DEFAULT(1),AT(10)
+        #PROMPT('Link manifest', CHECK),%LinkManifest,DEFAULT(1),AT(10)
+        #PROMPT('Copy DLL to output folder', CHECK),%CopyToOutput,DEFAULT(1),AT(10)
+      #ENDENABLE
+    #ENDBOXED
+    #DISPLAY
+    #DISPLAY
+    #BOXED, WHERE(%CWVersion < 7100), SECTION, AT(, 170)
+      #DISPLAY('Check this off if you have link errors ''Duplicate symbols...''')
+      #PROMPT('Link oleautcg.lib:',CHECK),%LinkOleAutcgC6,DEFAULT(1),AT(12)
+    #ENDBOXED
+    #BOXED, WHERE(%CWVersion >= 7100), SECTION, AT(, 170)
+      #DISPLAY('Check this off if you have link errors ''Duplicate symbols...''')
+      #PROMPT('Link oleautcg.lib:',CHECK),%LinkOleAutcgC7,DEFAULT(0),AT(12)
+    #ENDBOXED
+    #BOXED, HIDE
+      #PROMPT('Link oleautcg.lib:',CHECK),%LinkOleAutcg,AT(12)
+    #ENDBOXED
+  #ENDTAB
+  #TAB('Hidden'),WHERE(%False)
+    #PROMPT('Template version:', @s10),%TPLVersion,DEFAULT('1.00')
+    #PROMPT('Assembly name:', @s20), %AssemblyName,DEFAULT('WebSockets')
+    #PROMPT('Assembly version:', @s16),%AssemblyVersion,DEFAULT('1.0.0.0')
+  #ENDTAB
+#ENDSHEET
+#! --------------------------------------------------------------------------
+#AT(%BeforeGenerateApplication)
+  #pdefine('_SVDllMode_',0)
+  #pdefine('_SVLinkMode_',1)
+  #IF(%CWVersion < 7100)
+    #SET(%LinkOleAutcg, %LinkOleAutcgC6)
+  #ELSE
+    #SET(%LinkOleAutcg, %LinkOleAutcgC7)
+  #ENDIF
+  #pdefine('_ecgOleAutLinkMode_',%LinkOleAutcg)
+#ENDAT
+#! --------------------------------------------------------------------------
+#AT(%BeforeGenerateApplication)
+  #pdefine('_ABCDllMode_',0)
+  #pdefine('_ABCLinkMode_',1)
+#ENDAT
+#! --------------------------------------------------------------------------
+#AT(%AfterGeneratedApplication)
+  #IF(%AddDependency = '1')
+    #SET(%AssemblyVersion, '1.0.0.0')
+    #CALL(%AddDependency, %AssemblyName, %AssemblyVersion, %LinkManifest)
+  #ENDIF
+#ENDAT
+#! --------------------------------------------------------------------------
+#AT(%AfterGlobalIncludes)
+  #IF(%AppTemplateFamily='ABC')
+    #ADD(%GlobalIncludeList,'WebSockets.inc')
+  #ELSE
+    #ADD(%CustomGlobalDeclarationIncludes,'WebSockets.inc')
+  #ENDIF
+#ENDAT
+#! --------------------------------------------------------------------------
+#AT(%CustomGlobalDeclarations)
+  #IF(%CWVersion >= 8000)
+    #IF(%CopyToOutput='1')
+      #PROJECT('None(WebSockets.dll), CopyToOutputDirectory=PreserveNewest')
+    #ELSE  
+      #PROJECT('None(WebSockets.dll), CopyToOutputDirectory=Never')
+    #ENDIF
+  #ENDIF
+#ENDAT
