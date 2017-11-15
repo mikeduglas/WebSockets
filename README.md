@@ -8,13 +8,18 @@ Based on CodeProject's article [WebSocket Server in C#](https://www.codeproject.
 
 ## WebSocket client
 - can be written in Clarion, JavaScript, and so on.
+- untrusted connections allowed
 
 
 ### How to test:
-- Start TestServer.exe
+- Start TestServer.exe. To enable SSL, set following INI settings:
+port=443  
+certfile=mycert.pfx  
+certpwd=mypassword  
+  
 
 for web "chat" client:
-- Open http://localhost:88/client.html page in web browser, file TestServer\web\client.html will be loaded;
+- Open http://localhost:88/client.html page (or https://localhost/wssclient.html if SSL enabled) in web browser, file TestServer\web\client.html will be loaded;
 - type something in entry field and press "Send". A text you typed in will be send to the server, server will send it back to the client in upper case;
 you'll see the response in web browser.
 

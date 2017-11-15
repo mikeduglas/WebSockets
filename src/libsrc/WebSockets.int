@@ -42,7 +42,7 @@ data4                           STRING('<0BBH><3EH><0EEH><6H><88H><59H><9H><4BH>
 IWebSocketClient              INTERFACE(IDispatch),COM,TYPE
 RegisterEventHandler            PROCEDURE(*IWebSocketEvents handler),HRESULT,RAW,PROC
 UnregisterEventHandler          PROCEDURE(*IWebSocketEvents handler),HRESULT,RAW,PROC
-vStart                          PROCEDURE(BSTRING pUrl),HRESULT,RAW,PROC
+vStart                          PROCEDURE(BSTRING pUrl,BYTE allowUntrusted),HRESULT,RAW,PROC
 vStop                           PROCEDURE(),HRESULT,RAW,PROC
 vSendText                       PROCEDURE(BSTRING text),HRESULT,RAW,PROC
 vSendBinary                     PROCEDURE(VARIANT payload),HRESULT,RAW,PROC

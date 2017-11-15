@@ -51,7 +51,7 @@ GetLibLocation                  PROCEDURE(),STRING,DERIVED
 !Interface methods
 RegisterEventHandler            PROCEDURE(*IWebSocketEvents handler),HRESULT,PROC,VIRTUAL,PROTECTED
 UnregisterEventHandler          PROCEDURE(*IWebSocketEvents handler),HRESULT,PROC,VIRTUAL,PROTECTED
-vStart                          PROCEDURE(BSTRING pUrl),HRESULT,PROC,VIRTUAL,PROTECTED
+vStart                          PROCEDURE(BSTRING pUrl,BYTE allowUntrusted),HRESULT,PROC,VIRTUAL,PROTECTED
 vStop                           PROCEDURE(),HRESULT,PROC,VIRTUAL,PROTECTED
 vSendText                       PROCEDURE(BSTRING text),HRESULT,PROC,VIRTUAL,PROTECTED
 vSendBinary                     PROCEDURE(*VARIANT payload),HRESULT,PROC,VIRTUAL,PROTECTED
@@ -159,7 +159,7 @@ Destruct                        PROCEDURE(), DERIVED
 Init                            PROCEDURE(), HRESULT, PROC, DERIVED, PROTECTED
 Kill                            PROCEDURE(), HRESULT, PROC, DERIVED, PROTECTED
 
-StartClient                     PROCEDURE(STRING pUrl), BOOL, PROC
+StartClient                     PROCEDURE(STRING pUrl, BOOL allowUntrusted = FALSE), BOOL, PROC
 StopClient                      PROCEDURE(), BOOL, PROC
 Connected                       PROCEDURE(), BOOL
 

@@ -14,6 +14,7 @@ client                        CLASS(TWebSocketClient)
 ConnectionOpened                PROCEDURE(), DERIVED, PROTECTED
 ConnectionClose                 PROCEDURE(WebSocketCloseCode pCode, STRING pReason), DERIVED, PROTECTED
 TextFrame                       PROCEDURE(STRING pText), DERIVED, PROTECTED
+LogError                        PROCEDURE(STRING pMsg), DERIVED, PROTECTED
                               END
 
 MsgTextToSend                 STRING(256)
@@ -24,11 +25,13 @@ sText                           STRING(255)
                               END
 
 host                          STRING(255)
+allowUntrusted                BOOL
 
 Window                        WINDOW('WebSockets client'),AT(,,317,208),CENTER,GRAY,SYSTEM,FONT('Micros' & |
                                 'oft Sans Serif',8)
                                 ENTRY(@s255),AT(10,12,149),USE(host)
                                 BUTTON('Connect'),AT(164,12,50),USE(?bConnect)
+                                CHECK(' Allow untrusted'),AT(229,15),USE(allowUntrusted)
                                 LIST,AT(9,37,298,118),USE(?lstMessages),HVSCROLL,FROM(MessageQ)
                                 PROMPT('Text:'),AT(9,170),USE(?PROMPT1)
                                 ENTRY(@s255),AT(37,167,207),USE(MsgTextToSend)
@@ -39,7 +42,8 @@ Window                        WINDOW('WebSockets client'),AT(,,317,208),CENTER,G
 
   CODE
 
-  host = GETINI('client', 'host', 'ws://localhost:88/chat', '.\TestClientSrc.ini')
+  host = GETINI('server', 'host', 'ws://localhost:88/chat', '.\TestClientSrc.ini')
+  allowUntrusted = GETINI('server', 'allowUntrusted', 0, '.\TestClientSrc.ini')
   
   OPEN(Window)
   ACCEPT
@@ -49,7 +53,7 @@ Window                        WINDOW('WebSockets client'),AT(,,317,208),CENTER,G
         client.StopClient()
       END
       
-      client.StartClient(host)
+      client.StartClient(host, allowUntrusted)
 
     OF ?bSendText
       IF MsgTextToSend
@@ -84,13 +88,13 @@ Window                        WINDOW('WebSockets client'),AT(,,317,208),CENTER,G
 
 client.ConnectionOpened       PROCEDURE()
   CODE
-  MessageQ:sText = 'Connection opened'
+  MessageQ:sText = '[STATE] '& 'Connection opened'
   ADD(MessageQ)
   DISPLAY(?lstMessages)
     
 client.ConnectionClose        PROCEDURE(WebSocketCloseCode pCode, STRING pReason)
   CODE
-  MessageQ:sText = 'Connection closed, code '& pCode
+  MessageQ:sText = '[STATE] '& 'Connection closed, code '& pCode
   IF pReason
     MessageQ:sText = CLIP(MessageQ:sText) &', reason "'& pReason &'"'
   END
@@ -103,3 +107,10 @@ client.TextFrame              PROCEDURE(STRING pText)
   MessageQ:sText = '[Server] '& pText
   ADD(MessageQ)
   DISPLAY(?lstMessages)
+
+client.LogError               PROCEDURE(STRING pMsg)
+  CODE
+  MessageQ:sText = '[ERROR] '& pMsg
+  ADD(MessageQ)
+  DISPLAY(?lstMessages)
+  
