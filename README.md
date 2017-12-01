@@ -16,7 +16,7 @@ Copy ClaOLE.dll, ClaRUN.dll, WebSockets.dll files from \dlls into CharServer fol
 - Client: if a server is running on same machine, client's app can connect to that server using "localhost": ws://localhost:88/chat. (In my home network I can use
 ws://192.168.1.2:88/chat host address.)
 Copy ClaOLE.dll, ClaRUN.dll, WebSockets.dll, EasyHtml.dll files from \dlls into CharClient folder before running the client.
-
+![ChatClient](WebChat.png?raw=true "Chat client")
 
 
 ### How to test:
