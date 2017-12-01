@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>Chat client</title>
+    <style type="text/css">
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+        form { background: #000; padding: 0px; position: fixed; bottom: 0; width: 100%; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <ul id="messages"></ul>
+    <form action="">
+    </form>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js" ></script>
+    <script type="text/javascript">
+        function curtime() {
+                var d = new Date();
+                return d.toLocaleTimeString();
+        }
+
+        function scrolllist() {
+                $("html,body").animate({scrollTop: $('ul#messages li:last').offset().top+30});
+        }
+
+        function onsend(receiver, msg) {
+                $('#messages').append($('<li style="color: darkgreen; margin-right: 100px; background: #ccc;">' + '[To ' + receiver + '] ' + msg + '<div style="float:right;">' + curtime() + '</div>' + '</li>'));
+                scrolllist();
+        }
+
+        function onreceive(sender, msg) {
+                $('#messages').append($('<li style="color: green; margin-left: 100px; background: #eee;">' + '[From ' + sender + '] ' + msg + '<div style="float:right;">' + curtime() + '</div>' + '</li>'));
+                scrolllist();
+        }
+
+        function onerror(msg) {
+                $('#messages').append($('<li style="color: red;">').text(curtime() + ' [ERROR] ' + msg));
+                scrolllist();
+        }
+
+        function oninfo(msg) {
+                $('#messages').append($('<li style="text-align: right; color: blue;">').text(msg + ' [INFO] ' + curtime()));
+                scrolllist();
+        }
+
+    </script>
+</body>
+</html>
