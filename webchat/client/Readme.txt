@@ -1,6 +1,4 @@
-- Copy following files from \dlls folder:
+- Copy following files from \BIN folder:
 
-ClaOLE.dll
-ClaRUN.dll
 EasyHtml.dll
 WebSockets.dll
